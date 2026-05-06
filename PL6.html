@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專題研習 (PL6) - 匯報階段成果與互評 </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for smooth transitions */
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-press:active { transform: scale(0.95); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .progress-bar { transition: width 1s linear; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-md z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+                <svg class="w-8 h-8 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">專題研習 (PL6) - 匯報階段成果與互評</h1>
+                    <p class="text-indigo-200 text-sm">課堂匯報、成品展示與同儕互評</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-1 bg-indigo-700/50 p-1 rounded-lg">
+                <button onclick="switchTab('tab-info')" id="btn-tab-info" class="tab-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-white text-indigo-700 shadow">活動簡介</button>
+                <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-indigo-100 hover:text-white hover:bg-indigo-500 transition-colors">抽籤與計時台</button>
+                <button onclick="switchTab('tab-rubric')" id="btn-tab-rubric" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-indigo-100 hover:text-white hover:bg-indigo-500 transition-colors">評分準則</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: 活動簡介 -->
+        <section id="tab-info" class="tab-content active space-y-6">
+            <div class="bg-white rounded-2xl shadow-md p-8 lg:p-10 border border-slate-200">
+                <h2 class="text-3xl font-extrabold text-indigo-800 mb-6 flex items-center pb-4 border-b-2 border-indigo-100">
+                    <svg class="w-10 h-10 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    活動目標與流程
+                </h2>
+                
+                <div class="text-lg text-slate-700 mb-8 font-medium leading-relaxed space-y-3 bg-indigo-50 p-5 rounded-xl border border-indigo-100">
+                    <p>🎯 <b class="text-indigo-800">本節目標：</b>整合上次匯報的資料，一針見血地說明「探究對象、問題背景/成因、解決方案」。</p>
+                    <p>🛠️ <b class="text-indigo-800">展示重點：</b>詳細展示及講解 <b class="text-rose-600">初版發明品的設計原型</b> 或 <b class="text-rose-600">初步數據分析成果</b>。</p>
+                    <p>⏳ <b class="text-indigo-800">時間規劃：</b>前 5 分鐘全員準備，其後 40 分鐘進行 5 組互評循環 (每組約 8 分鐘)。</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+                    <!-- 左側：流程 -->
+                    <div>
+                        <div class="bg-indigo-50/80 rounded-2xl p-6 lg:p-8 border border-indigo-100 shadow-inner">
+                            <h3 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                                <svg class="w-7 h
