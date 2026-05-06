@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專題研習 (PL6) - 匯報階段成果與互評 </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for smooth transitions */
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-press:active { transform: scale(0.95); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .progress-bar { transition: width 1s linear; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-indigo-600 text-white shadow-md z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+                <svg class="w-8 h-8 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">專題研習 (PL6) - 匯報階段成果與互評</h1>
+                    <p class="text-indigo-200 text-sm">課堂匯報、成品展示與同儕互評</p>
+                </div>
+            </div>
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-1 bg-indigo-700/50 p-1 rounded-lg">
+                <button onclick="switchTab('tab-info')" id="btn-tab-info" class="tab-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-white text-indigo-700 shadow">活動簡介</button>
+                <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-indigo-100 hover:text-white hover:bg-indigo-500 transition-colors">抽籤與計時台</button>
+                <button onclick="switchTab('tab-rubric')" id="btn-tab-rubric" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-indigo-100 hover:text-white hover:bg-indigo-500 transition-colors">評分準則</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- TAB 1: 活動簡介 -->
+        <section id="tab-info" class="tab-content active space-y-6">
+            <div class="bg-white rounded-2xl shadow-md p-8 lg:p-10 border border-slate-200">
+                <h2 class="text-3xl font-extrabold text-indigo-800 mb-6 flex items-center pb-4 border-b-2 border-indigo-100">
+                    <svg class="w-10 h-10 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    活動目標與流程
+                </h2>
+                
+                <div class="text-lg text-slate-700 mb-8 font-medium leading-relaxed space-y-3 bg-indigo-50 p-5 rounded-xl border border-indigo-100">
+                    <p>🎯 <b class="text-indigo-800">本節目標：</b>整合上次匯報的資料，一針見血地說明「探究對象、問題背景/成因、解決方案」。</p>
+                    <p>🛠️ <b class="text-indigo-800">展示重點：</b>詳細展示及講解 <b class="text-rose-600">初版發明品的設計原型</b> 或 <b class="text-rose-600">初步數據分析成果</b>。</p>
+                    <p>⏳ <b class="text-indigo-800">時間規劃：</b>前 5 分鐘全員準備，其後 40 分鐘進行 5 組互評循環 (每組約 8 分鐘)。</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+                    <!-- 左側：流程 -->
+                    <div>
+                        <div class="bg-indigo-50/80 rounded-2xl p-6 lg:p-8 border border-indigo-100 shadow-inner">
+                            <h3 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                                <svg class="w-7 h-7 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                「3+3」互動模式 
+                            </h3>
+                            <ul class="space-y-4 text-base lg:text-lg text-slate-800">
+                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-indigo-50">
+                                    <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 1</span>
+                                    <span class="leading-relaxed"><b class="text-indigo-800">就位 (30秒-1分鐘)</b>：匯報組迅速上台，連接電腦或擺放模型。</span>
+                                </li>
+                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-indigo-50">
+                                    <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 2</span>
+                                    <span class="leading-relaxed"><b class="text-indigo-800">實測與解說 (3分鐘)</b>：不需過多開場白。直接展示成品運作 (Live Demo) 或最關鍵的數據圖表。</span>
+                                </li>
+                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-indigo-50">
+                                    <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 3</span>
+                                    <span class="leading-relaxed"><b class="text-indigo-800">筆錄評分 (1分鐘)</b>：台下快速勾選量表，寫下具體的修改建議。</span>
+                                </li>
+                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-indigo-50">
+                                    <span class="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 4</span>
+                                    <span class="leading-relaxed"><b class="text-indigo-800">口頭互評/Q&A (3分鐘)</b>：台下提問找漏洞，匯報組簡短回應，挖掘更多改善空間。</span>
+                                </li>
+                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-indigo-50">
+                                    <span class="bg-slate-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 5</span>
+                                    <span class="leading-relaxed"><b class="text-slate-700">輪替 (2分鐘)</b>：下一組上台，重複上述步驟。</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 右側：角色分配 -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                            <svg class="w-7 h-7 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            角色與任務分配 (極速反應版)
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- 匯報組 -->
+                            <div class="bg-emerald-50 rounded-r-2xl border-l-8 border-emerald-500 p-6 lg:p-8 shadow-sm">
+                                <h4 class="text-xl lg:text-2xl font-black text-emerald-800 mb-4 tracking-wide">台上：匯報組 (快、狠、準)</h4>
+                                <ul class="space-y-3 text-base lg:text-lg text-emerald-900 font-medium">
+                                    <li class="flex items-start"><span class="mr-3 text-xl">🎤</span> <span class="leading-relaxed"><b class="text-emerald-700">解說員 (Speaker)</b>：只講重點（例如：最大痛點是X，方案是Y）。</span></li>
+                                    <li class="flex items-start"><span class="mr-3 text-xl">⚙️</span> <span class="leading-relaxed"><b class="text-emerald-700">操作員 (Operator)</b>：配合解說，同步操作模型或指出圖表關鍵，不浪費時間找東西。</span></li>
+                                    <li class="flex items-start"><span class="mr-3 text-xl">📝</span> <span class="leading-relaxed"><b class="text-emerald-700">記錄員 (Secretary)</b>：<span class="text-rose-600 border-b-2 border-rose-300">最重要！</span>快速記下 Q&A 環節台下的質疑，作為後期優化的依據。</span></li>
+                                </ul>
+                            </div>
+                            
+                            <!-- 評審組 -->
+                            <div class="bg-amber-50 rounded-r-2xl border-l-8 border-amber-500 p-6 lg:p-8 shadow-sm">
+                                <h4 class="text-xl lg:text-2xl font-black text-amber-800 mb-4 tracking-wide">台下：評審組 (擔任測試員)</h4>
+                                <ul class="space-y-3 text-base lg:text-lg text-amber-900 font-medium">
+                                    <li class="flex items-start"><span class="mr-3 text-xl">📊</span> <span class="leading-relaxed"><b class="text-amber-700">評分員 (Scorer)</b>：負責快速勾選評分紙 (1-5分量表)。</span></li>
+                                    <li class="flex items-start"><span class="mr-3 text-xl">🕵️</span> <span class="leading-relaxed"><b class="text-amber-700">找碴員 (Bug Hunter)</b>：專注尋找邏輯漏洞或結構弱點（例：輪子好像轉不動）。</span></li>
+                                    <li class="flex items-start"><span class="mr-3 text-xl">🗣️</span> <span class="leading-relaxed"><b class="text-amber-700">發言人 (Spokesperson)</b>：準備好一個「具體問題」或「建議」隨時發問/發言。</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 抽籤與計時台 -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            
+            <!-- Randomizers -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Presenter Draw -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-bold text-slate-700">上台匯報組別</h3>
+                        <button onclick="resetPool('presenter')" class="text-xs text-slate-400 hover:text-emerald-600 transition-colors font-medium flex items-center" title="重新放入所有組別">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
+                        </button>
+                    </div>
+                    <div class="text-5xl font-black text-emerald-600 my-4 h-16 flex items-center justify-center" id="presenter-result">?</div>
+                    <div class="text-sm font-medium text-slate-400 mb-4 h-5" id="presenter-remaining">剩餘: 1, 2, 3, 4, 5</div>
+                    <button onclick="drawGroup('presenter')" id="presenter-btn" class="btn-press bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-bold py-3 px-6 rounded-lg w-full transition-colors flex justify-center items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        抽取匯報組
+                    </button>
+                </div>
+                <!-- Reviewer Draw -->
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-bold text-slate-700">指定口頭回饋組別</h3>
+                        <button onclick="resetPool('reviewer')" class="text-xs text-slate-400 hover:text-amber-600 transition-colors font-medium flex items-center" title="重新放入所有組別">
+                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
+                        </button>
+                    </div>
+                    <div class="text-5xl font-black text-amber-600 my-4 h-16 flex items-center justify-center" id="reviewer-result">?</div>
+                    <div class="text-sm font-medium text-slate-400 mb-4 h-5" id="reviewer-remaining">剩餘: 1, 2, 3, 4, 5</div>
+                    <button onclick="drawGroup('reviewer')" id="reviewer-btn" class="btn-press bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold py-3 px-6 rounded-lg w-full transition-colors flex justify-center items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        抽取回饋組
+                    </button>
+                </div>
+            </div>
+
+            <!-- Timers -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                
+                <!-- Presentation Timer -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-indigo-100 flex flex-col h-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-indigo-700">實測與解說計時器 (3分鐘)</h3>
+                        <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-bold">Step 2</span>
+                    </div>
+                    
+                    <div class="flex-grow flex flex-col justify-center items-center py-6">
+                        <div id="pres-time-display" class="text-7xl font-mono font-black text-slate-800 tracking-tighter tabular-nums mb-4">03:00</div>
+                        
+                        <!-- Progress & Phase -->
+                        <div class="w-full max-w-sm space-y-2">
+                            <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                                <div id="pres-progress" class="h-full bg-indigo-500 progress-bar" style="width: 100%;"></div>
+                            </div>
+                            <div id="pres-phase-text" class="text-center font-bold text-indigo-600 min-h-[3rem] flex items-center justify-center text-sm px-2">
+                                準備開始
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 mt-4">
+                        <button onclick="toggleTimer('pres')" id="pres-toggle-btn" class="flex-1 btn-press bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition-colors">
+                            開始
+                        </button>
+                        <button onclick="resetTimer('pres')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors">
+                            重設
+                        </button>
+                    </div>
+                    <!-- 微調按鈕 -->
+                    <div class="flex justify-center space-x-2 mt-3">
+                        <button onclick="adjustTime('pres', -10)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">-10秒</button>
+                        <button onclick="adjustTime('pres', 30)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">+30秒</button>
+                        <button onclick="adjustTime('pres', 60)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">+1分鐘</button>
+                    </div>
+                </div>
+
+                <!-- Feedback Timer -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-amber-100 flex flex-col h-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-amber-700">評分與 Q&A 計時器 (4分鐘)</h3>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">Step 3 & 4</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-grow flex flex-col justify-center items-center py-6">
+                        <div id="feed-time-display" class="text-7xl font-mono font-black text-slate-800 tracking-tighter tabular-nums mb-4">04:00</div>
+                        
+                        <!-- Progress & Phase -->
+                        <div class="w-full max-w-sm space-y-2">
+                            <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
+                                <div id="feed-progress" class="h-full bg-amber-500 progress-bar" style="width: 100%;"></div>
+                            </div>
+                            <div id="feed-phase-text" class="text-center font-bold text-amber-600 min-h-[3rem] flex items-center justify-center text-sm px-2">
+                                準備開始
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3 mt-4">
+                        <button onclick="toggleTimer('feed')" id="feed-toggle-btn" class="flex-1 btn-press bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-lg transition-colors">
+                            開始
+                        </button>
+                        <button onclick="resetTimer('feed')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors">
+                            重設
+                        </button>
+                    </div>
+                    <!-- 微調按鈕 -->
+                    <div class="flex justify-center space-x-2 mt-3">
+                        <button onclick="adjustTime('feed', -10)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">-10秒</button>
+                        <button onclick="adjustTime('feed', 30)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">+30秒</button>
+                        <button onclick="adjustTime('feed', 60)" class="px-3 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md transition-colors">+1分鐘</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: 評分準則 -->
+        <section id="tab-rubric" class="tab-content space-y-8">
+            <div class="bg-white rounded-2xl shadow-md p-8 lg:p-10 border border-slate-200">
+                <h2 class="text-3xl font-extrabold text-indigo-800 mb-8 flex items-center pb-4 border-b-2 border-indigo-100">
+                    <svg class="w-10 h-10 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    第一部分：簡報評分 (1-5分)
+                </h2>
+                <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                    <table class="min-w-full divide-y divide-slate-200 text-base lg:text-xl">
+                        <thead class="bg-indigo-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-5 text-left font-black text-indigo-900 uppercase tracking-wider w-1/4 lg:w-1/3">評分範疇</th>
+                                <th scope="col" class="px-6 py-5 text-left font-black text-indigo-900 uppercase tracking-wider">說明</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">1</span>成品/數據<br>完整度</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
+                                    <b class="text-emerald-700">(工程組)</b> 初版成品已具備基本雛形，能展示核心功能。<br>
+                                    <b class="text-blue-700">(科學組)</b> 初步數據收集完整，圖表清晰並能反映分析結果。
+                                </td>
+                            </tr>
+                            <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">2</span>技術應用<br>與邏輯</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">能清楚解釋在製作成品或分析數據時，應用了哪些具體的技術、科學原理或工程師/科學家方法。</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">3</span>演示與操作</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
+                                    <b class="text-emerald-700">(工程組)</b> 現場試用/操作演示順暢，能讓同學直觀了解運作。<br>
+                                    <b class="text-blue-700">(科學組)</b> 數據分析過程解說合乎邏輯，結論由數據支持。
+                                </td>
+                            </tr>
+                            <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">4</span>溝通與表達</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">匯報清晰流暢，能引導同學理解其設計意念或分析發現，並能有效回應同學/老師的提問。</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">5</span>團隊合作</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">組員分工清晰（如：有人負責講解、有人負責演示操作），展現出良好的協作精神。</td>
+                            </tr>
+                            <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
+                                <td class="px-6 py-5 whitespace-nowrap font-bold text-slate-900 flex items-center"><span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">6</span>整體表現</td>
+                                <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">評估該組在整個展示環節中的表現，包括成品的吸引力、準備充足度及整體觀感。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 rounded-2xl shadow-md p-8 lg:p-10 border border-indigo-200">
+                <h2 class="text-3xl font-extrabold text-indigo-900 mb-8 flex items-center">
+                    <svg class="w-10 h-10 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                    第二部分：同儕回饋與反思
+                </h2>
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Star 卡片 -->
+                    <div class="bg-white p-6 rounded-2xl border-t-8 border-yellow-400 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                        <h3 class="font-black text-2xl flex items-center mb-4 text-slate-800">
+                            <span class="text-4xl mr-3 drop-shadow-sm">⭐</span> 
+                            <div>
+                                <span class="block tracking-wide">讚賞 (Star)</span>
+                                <span class="text-lg text-yellow-600 font-bold block mt-1">給予一個亮點</span>
+                            </div>
+                        </h3>
+                        <p class="text-slate-700 text-base leading-relaxed font-medium bg-yellow-50 p-4 rounded-xl border border-yellow-100 flex-grow">
+                            <span class="font-bold text-yellow-800 text-lg block mb-2">🗣️ 參考例子：</span>
+                            成品的某個功能很實用、數據圖表非常易懂、演示過程很有趣...
+                        </p>
+                    </div>
+
+                    <!-- Wish 卡片 -->
+                    <div class="bg-white p-6 rounded-2xl border-t-8 border-blue-400 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                        <h3 class="font-black text-2xl flex items-center mb-4 text-slate-800">
+                            <span class="text-4xl mr-3 drop-shadow-sm">🎯</span> 
+                            <div>
+                                <span class="block tracking-wide">建議 (Wish)</span>
+                                <span class="text-lg text-blue-600 font-bold block mt-1">具體的改進建議</span>
+                            </div>
+                        </h3>
+                        <p class="text-slate-700 text-base leading-relaxed font-medium bg-blue-50 p-4 rounded-xl border border-blue-100 flex-grow">
+                            <span class="font-bold text-blue-800 text-lg block mb-2">🗣️ 參考例子：</span>
+                            材料可能太貴、某個實驗步驟不清晰、設計圖可以增加XX功能...
+                        </p>
+                    </div>
+
+                    <!-- Reflection 卡片 -->
+                    <div class="bg-white p-6 rounded-2xl border-t-8 border-emerald-400 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                        <h3 class="font-black text-2xl flex items-center mb-4 text-slate-800">
+                            <span class="text-4xl mr-3 drop-shadow-sm">💡</span> 
+                            <div>
+                                <span class="block tracking-wide">反思 (Reflection)</span>
+                                <span class="text-lg text-emerald-600 font-bold block mt-1">你的得著與啟發</span>
+                            </div>
+                        </h3>
+                        <p class="text-slate-700 text-base leading-relaxed font-medium bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex-grow">
+                            <span class="font-bold text-emerald-800 text-lg block mb-2">🗣️ 參考例子：</span>
+                            我發現他們的測試方法比我們的更嚴謹、我們也可以參考他們固定齒輪的方式...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scripts for Logic -->
+    <script>
+        // --- Tab Switching Logic ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-indigo-700', 'shadow');
+                btn.classList.add('text-indigo-100');
+            });
+            document.getElementById(tabId).classList.add('active');
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('text-indigo-100');
+            activeBtn.classList.add('bg-white', 'text-indigo-700', 'shadow');
+        }
+
+        // --- Audio Context for Beeps ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep(type = 'normal') {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            if (type === 'tick') {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.05);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.05);
+            } else if (type === 'reveal') {
+                oscillator.type = 'triangle';
+                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                oscillator.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); 
+                oscillator.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); 
+                oscillator.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.3); 
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.6);
+            } else if (type === 'warning') {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime + 0.1);
+                const osc2 = audioCtx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(880, audioCtx.currentTime + 0.15);
+                osc2.connect(gainNode);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime + 0.25);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.1);
+                osc2.start(audioCtx.currentTime + 0.15);
+                osc2.stop(audioCtx.currentTime + 0.25);
+            }
+        }
+
+        // --- Lottery Logic (No Duplicates) ---
+        const totalGroups = 5;
+        let pools = { presenter: [1, 2, 3, 4, 5], reviewer: [1, 2, 3, 4, 5] };
+        let currentPresenter = null;
+
+        function updateRemainingUI(type) {
+            const remainingDiv = document.getElementById(`${type}-remaining`);
+            if (pools[type].length === 0) {
+                remainingDiv.innerText = "已全數抽出";
+                remainingDiv.classList.add("text-rose-500");
+                remainingDiv.classList.remove("text-slate-400");
+            } else {
+                remainingDiv.innerText = `剩餘: ${pools[type].join(', ')}`;
+                remainingDiv.classList.remove("text-rose-500");
+                remainingDiv.classList.add("text-slate-400");
+            }
+        }
+
+        function resetPool(type) {
+            pools[type] = Array.from({length: totalGroups}, (_, i) => i + 1);
+            if (type === 'presenter') currentPresenter = null;
+            document.getElementById(`${type}-result`).innerHTML = '?';
+            const btn = document.getElementById(`${type}-btn`);
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            updateRemainingUI(type);
+        }
+
+        function drawGroup(type) {
+            const resultDiv = document.getElementById(`${type}-result`);
+            const btn = document.getElementById(`${type}-btn`);
+            let candidates = [...pools[type]];
+            if (type === 'reviewer' && currentPresenter !== null) {
+                candidates = candidates.filter(g => g !== currentPresenter);
+            }
+            if (candidates.length === 0) {
+                resultDiv.innerHTML = `<span class="text-3xl text-slate-400">無可用組別</span>`;
+                return;
+            }
+            const winnerIndex = Math.floor(Math.random() * candidates.length);
+            const winner = candidates[winnerIndex];
+            let counter = 0;
+            const maxIntervals = 15;
+            
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            btn.disabled = true; 
+            
+            const interval = setInterval(() => {
+                const randomNum = Math.floor(Math.random() * totalGroups) + 1;
+                resultDiv.innerText = `第 ${randomNum} 組`;
+                counter++;
+                playBeep('tick'); 
+                if (counter >= maxIntervals) {
+                    clearInterval(interval);
+                    resultDiv.innerHTML = `<span class="scale-125 inline-block transition-transform duration-300">第 ${winner} 組</span>`;
+                    pools[type] = pools[type].filter(g => g !== winner);
+                    if (type === 'presenter') currentPresenter = winner;
+                    updateRemainingUI(type);
+                    playBeep('reveal'); 
+                    if (pools[type].length > 0) btn.disabled = false;
+                    else btn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }, 50);
+        }
+
+        // --- Timers Logic ---
+        const timers = {
+            pres: { 
+                timeTotal: 180, timeRemaining: 180, interval: null, isRunning: false, // 3分鐘匯報
+                phases: [
+                    { start: 180, end: 120, text: "展示重點：一針見血道出問題與方案 (第1分鐘)", color: "bg-indigo-400" },
+                    { start: 120, end: 30, text: "實測與解說：Live Demo 或 數據圖表 (第2分鐘)", color: "bg-indigo-500" },
+                    { start: 30, end: 0, text: "最後總結：預備結束！", color: "bg-rose-500" }
+                ]
+            },
+            feed: { 
+                timeTotal: 240, timeRemaining: 240, interval: null, isRunning: false, // 4分鐘互評 (1min筆錄 + 3min Q&A)
+                phases: [
+                    { start: 240, end: 180, text: "全員筆錄評分 (請快速勾選及寫下建議)", color: "bg-amber-400" },
+                    { start: 180, end: 0, text: "口頭互評 / Q&A 對話時間 (尋找漏洞！)", color: "bg-amber-600" }
+                ]
+            }
+        };
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function updateUI(type) {
+            const t = timers[type];
+            document.getElementById(`${type}-time-display`).innerText = formatTime(t.timeRemaining);
+            const progressPct = (t.timeRemaining / t.timeTotal) * 100;
+            const progressEl = document.getElementById(`${type}-progress`);
+            progressEl.style.width = `${progressPct}%`;
+            
+            let currentPhase = t.phases.find(p => t.timeRemaining <= p.start && t.timeRemaining > p.end);
+            if (t.timeRemaining === 0) currentPhase = t.phases[t.phases.length - 1]; 
+            
+            if (currentPhase) {
+                const phaseTextEl = document.getElementById(`${type}-phase-text`);
+                phaseTextEl.innerText = currentPhase.text;
+                progressEl.className = `h-full progress-bar ${currentPhase.color}`;
+            }
+            if(t.timeRemaining <= 10 && t.timeRemaining > 0) {
+                document.getElementById(`${type}-time-display`).classList.add('text-red-500');
+            } else {
+                document.getElementById(`${type}-time-display`).classList.remove('text-red-500');
+            }
+        }
+
+        function toggleTimer(type) {
+            const t = timers[type];
+            const btn = document.getElementById(`${type}-toggle-btn`);
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if (t.isRunning) {
+                clearInterval(t.interval);
+                t.isRunning = false;
+                btn.innerText = "繼續";
+                btn.classList.replace('bg-red-500', type === 'pres' ? 'bg-indigo-600' : 'bg-amber-500');
+                btn.classList.replace('hover:bg-red-600', type === 'pres' ? 'hover:bg-indigo-700' : 'hover:bg-amber-600');
+            } else {
+                if (t.timeRemaining <= 0) return; 
+                t.isRunning = true;
+                btn.innerText = "暫停";
+                btn.classList.replace(type === 'pres' ? 'bg-indigo-600' : 'bg-amber-500', 'bg-red-500');
+                btn.classList.replace(type === 'pres' ? 'hover:bg-indigo-700' : 'hover:bg-amber-600', 'hover:bg-red-600');
+                
+                updateUI(type); 
+                t.interval = setInterval(() => {
+                    t.timeRemaining--;
+                    updateUI(type);
+                    if (t.timeRemaining === 30) playBeep('warning');
+                    if (t.timeRemaining <= 0) {
+                        clearInterval(t.interval);
+                        t.isRunning = false;
+                        btn.innerText = "完成";
+                        btn.disabled = true;
+                        btn.classList.add('opacity-50', 'cursor-not-allowed');
+                        document.getElementById(`${type}-time-display`).classList.replace('text-red-500', 'text-slate-800');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer(type) {
+            const t = timers[type];
+            clearInterval(t.interval);
+            t.isRunning = false;
+            t.timeRemaining = t.timeTotal;
+            const btn = document.getElementById(`${type}-toggle-btn`);
+            btn.innerText = "開始";
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            
+            if (btn.classList.contains('bg-red-500')) {
+                btn.classList.replace('bg-red-500', type === 'pres' ? 'bg-indigo-600' : 'bg-amber-500');
+                btn.classList.replace('hover:bg-red-600', type === 'pres' ? 'hover:bg-indigo-700' : 'hover:bg-amber-600');
+            }
+            document.getElementById(`${type}-phase-text`).innerText = "準備開始";
+            document.getElementById(`${type}-time-display`).classList.remove('text-red-500');
+            updateUI(type);
+        }
+
+        function adjustTime(type, seconds) {
+            const t = timers[type];
+            t.timeRemaining += seconds;
+            if (t.timeRemaining < 0) t.timeRemaining = 0;
+            if (t.timeRemaining > t.timeTotal) t.timeTotal = t.timeRemaining;
+            
+            if (t.timeRemaining > 0 && !t.isRunning) {
+                const btn = document.getElementById(`${type}-toggle-btn`);
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                document.getElementById(`${type}-time-display`).classList.remove('text-red-500');
+                if (btn.innerText === "完成") btn.innerText = "開始";
+            }
+            updateUI(type);
+        }
+
+        // Initialize UI
+        updateUI('pres');
+        updateUI('feed');
+    </script>
+</body>
+</html>
