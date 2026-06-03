@@ -6,178 +6,297 @@
     <title>專題研習 (PL8) - 成果展預演與定稿</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* CSS 轉場與動畫 */
         .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-press:active { transform: scale(0.95); }
-        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .btn-press:active { transform: scale(0.97); }
         .progress-bar { transition: width 1s linear; }
+        .toast-active { transform: translateY(0); opacity: 1; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
-    <header class="bg-crimson bg-rose-700 text-white shadow-md z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
-            <div class="flex items-center space-x-3 mb-4 sm:mb-0">
-                <svg class="w-8 h-8 text-rose-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-rose-600 via-rose-700 to-indigo-700 text-white shadow-lg z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 text-center lg:text-left">
+                <div class="p-3 bg-white/10 rounded-xl">
+                    <svg class="w-8 h-8 text-rose-200 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+                    </svg>
+                </div>
                 <div>
-                    <h1 class="text-2xl font-bold tracking-tight">專題研習 (PL8) - 成果展預演與定稿</h1>
-                    <p class="text-rose-200 text-sm">總時長：80 分鐘 | 地點：主課室 (G3G4)</p>
+                    <h1 class="text-2xl lg:text-3xl font-black tracking-tight flex items-center gap-2 justify-center lg:justify-start">
+                        專題研習 (PL8) 成果展預演與定稿
+                        <span class="bg-yellow-400 text-slate-900 text-xs px-2 py-0.5 rounded-full font-bold">預演特訓</span>
+                    </h1>
+                    <p class="text-rose-100/90 text-sm mt-1">2分鐘極速簡報 (Elevator Pitch) ✕ Padlet資料審核 ✕ 最終定稿</p>
                 </div>
             </div>
-            <nav class="flex space-x-1 bg-rose-800/50 p-1 rounded-lg">
-                <button onclick="switchTab('tab-info')" id="btn-tab-info" class="tab-btn px-4 py-2 rounded-md text-sm font-medium transition-colors bg-white text-rose-700 shadow">流程與分工</button>
-                <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-rose-100 hover:text-white hover:bg-rose-600 transition-colors">極速計時台</button>
-                <button onclick="switchTab('tab-rubric')" id="btn-tab-rubric" class="tab-btn px-4 py-2 rounded-md text-sm font-medium text-rose-100 hover:text-white hover:bg-rose-600 transition-colors">預演評審準則</button>
+            <!-- Tab 切換按鈕 -->
+            <nav class="flex space-x-1 bg-black/20 p-1.5 rounded-xl border border-white/10 w-full lg:w-auto overflow-x-auto">
+                <button onclick="switchTab('tab-padlet')" id="btn-tab-padlet" class="tab-btn flex-1 lg:flex-none whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-rose-700 shadow-md">
+                    📝 1. 課前任務與成果展
+                </button>
+                <button onclick="switchTab('tab-dashboard')" id="btn-tab-dashboard" class="tab-btn flex-1 lg:flex-none whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-bold transition-all text-white hover:bg-white/10">
+                    ⏱️ 2. 極速簡報計時台
+                </button>
+                <button onclick="switchTab('tab-rubric')" id="btn-tab-rubric" class="tab-btn flex-1 lg:flex-none whitespace-nowrap px-4 py-2.5 rounded-lg text-sm font-bold transition-all text-white hover:bg-white/10">
+                    🏆 3. 同儕與中一互評準則
+                </button>
             </nav>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <section id="tab-info" class="tab-content active space-y-6">
-            <div class="bg-white rounded-2xl shadow-md p-8 lg:p-10 border border-slate-200">
-                <h2 class="text-3xl font-extrabold text-rose-800 mb-6 flex items-center pb-4 border-b-2 border-rose-100">
-                    <svg class="w-10 h-10 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                    核心目標：2分鐘電梯簡報 & 最終定稿 (Final Polish)
-                </h2>
+        <!-- TAB 1: 課前任務與成果展資訊 -->
+        <section id="tab-padlet" class="tab-content active space-y-6">
+            <!-- 成果展重要資訊看板 (整合 image_050ca1.png 資訊) -->
+            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl shadow-xl overflow-hidden text-white border border-indigo-500/30">
+                <div class="p-6 lg:p-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                    <div class="space-y-3 max-w-3xl">
+                        <div class="inline-flex items-center space-x-2 bg-rose-500 text-white text-xs px-3 py-1 rounded-full font-black tracking-wide uppercase">
+                            <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                            <span>7月8日 (星期三) 成果展重要日程</span>
+                        </div>
+                        <h2 class="text-3xl font-black tracking-tight">終極目標：中一成果展覽日 (July 8)</h2>
+                        <p class="text-indigo-200 font-medium text-base leading-relaxed">
+                            中一級同學與老師將會作為「投資人與評審」路過你們的展位。你們必須利用 <b class="text-white bg-rose-600 px-1.5 py-0.5 rounded">A1 Foam Board 展板</b> 及 <b class="text-white bg-indigo-500 px-1.5 py-0.5 rounded">Prototype V2 實物原型</b>，在最短時間內打動他們！
+                        </p>
+                    </div>
+                    <div class="bg-white/10 p-5 rounded-2xl border border-white/10 text-center w-full lg:w-auto shrink-0">
+                        <span class="text-xs text-indigo-200 block font-bold mb-1">距離展覽日僅剩</span>
+                        <span class="text-4xl font-extrabold text-yellow-400 tracking-wider">最後衝刺</span>
+                        <span class="text-xs text-indigo-200 block mt-1 font-bold">PL8 是最後一次在課堂修改的機會！</span>
+                    </div>
+                </div>
                 
-                <div class="text-lg text-slate-700 mb-8 font-medium leading-relaxed space-y-3 bg-rose-50 p-5 rounded-xl border border-rose-100">
-                    <p>🎯 <b class="text-rose-800">本節目標：</b>模擬在電梯遇到投資人/評審的情境，挑戰在最短時間內抓住觀眾注意力（STEAM 科學傳播元素）。</p>
-                    <p>🛠️ <b class="text-rose-800">高壓衝刺：</b>前 20 分鐘進行 5 組極速互評循環，隨後展開 35 分鐘的小組最終修訂定稿。</p>
+                <!-- 展位佈置 & 展覽當天成功要素 (Checklist) -->
+                <div class="grid md:grid-cols-3 border-t border-white/10 bg-black/20 text-sm">
+                    <div class="p-6 border-r border-white/10 space-y-3">
+                        <h3 class="font-bold text-base text-yellow-400 flex items-center gap-2">
+                            <span>🖼️ 展板標準 (A1 Foam Board)</span>
+                        </h3>
+                        <ul class="space-y-1.5 text-indigo-100 font-medium">
+                            <li>• 標題必須極大，保證 <b>3米外</b> 看得清</li>
+                            <li>• 圖片必須多於文字，拒絕「字海」</li>
+                            <li>• 排版舒適、不擁擠，重點清晰突出</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 border-r border-white/10 space-y-3">
+                        <h3 class="font-bold text-base text-emerald-400 flex items-center gap-2">
+                            <span>🛠️ 實物與影音配備 (Prototype V2)</span>
+                        </h3>
+                        <ul class="space-y-1.5 text-indigo-100 font-medium">
+                            <li>• 發明品組：必須帶實物模型且能流暢運作</li>
+                            <li>• 科學探究組：圖表能一目了然支持結論</li>
+                            <li>• 準備好充電設備與展示用平板電腦/筆電</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="font-bold text-base text-rose-400 flex items-center gap-2">
+                            <span>🎤 科學傳播與拉客策略</span>
+                        </h3>
+                        <ul class="space-y-1.5 text-indigo-100 font-medium">
+                            <li>• 主動引導路過的中一同學前來展位</li>
+                            <li>• 眼神接觸 + 笑容 + 2分鐘高感官互動</li>
+                            <li>• 準備「動手做」或「趣味演示」環節</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 班別主講人提醒：Padlet 課前任務與一鍵複製器 -->
+            <div class="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                <div class="bg-rose-50 border-b border-rose-100 p-6 lg:p-8">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                        <div>
+                            <span class="text-xs font-black text-rose-700 bg-rose-100 px-3 py-1 rounded-full uppercase">課前重要任務</span>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-2">班聯絡人通知：請各組上傳指定資料至 Padlet</h3>
+                            <p class="text-slate-600 text-sm mt-1">匯報開始前，各小組必須在 PL8 Padlet 的小組留言區提交以下研習資訊：</p>
+                        </div>
+                        <span class="text-sm bg-yellow-100 border border-yellow-200 text-yellow-800 font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                            📌 成果展海報連結 + 專案痛點
+                        </span>
+                    </div>
                 </div>
 
-                <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
-                    <div>
-                        <div class="bg-rose-50/80 rounded-2xl p-6 lg:p-8 border border-rose-100 shadow-inner">
-                            <h3 class="text-2xl font-bold text-rose-900 mb-6 flex items-center">
-                                <svg class="w-7 h-7 mr-2 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                「2+1」互動模式（比 PL6 更緊湊！）
-                            </h3>
-                            <ul class="space-y-4 text-base lg:text-lg text-slate-800">
-                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-rose-50">
-                                    <span class="bg-rose-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 1</span>
-                                    <span class="leading-relaxed"><b class="text-rose-800">極速匯報 (2分鐘)</b>：嚴格計時，響鈴即止。直奔主題展示 Prototype V2（修訂版成果）、核心研究發現與解決的痛點，不講流水帳。</span>
-                                </li>
-                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-rose-50">
-                                    <span class="bg-rose-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 2</span>
-                                    <span class="leading-relaxed"><b class="text-rose-800">快閃回饋 (1分鐘)</b>：台下不進行口頭問答以節省時間，專注把「聽不懂的地方」或「邏輯漏洞」記在評分紙/線上表單；導師同步給予一句話「關鍵點評」。</span>
-                                </li>
-                                <li class="flex items-start bg-white p-3 lg:p-4 rounded-xl shadow-sm border border-rose-50">
-                                    <span class="bg-slate-600 text-white font-bold px-3 py-1 rounded-lg text-sm mr-4 mt-0.5 shrink-0 shadow">Step 3</span>
-                                    <span class="leading-relaxed"><b class="text-slate-700">轉場就位 (1分鐘)</b>：下一組迅速就位，重複上述步驟。</span>
-                                </li>
-                            </ul>
+                <div class="p-6 lg:p-8 grid lg:grid-cols-12 gap-8">
+                    <!-- 左側：資料輸入表單 -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <h4 class="text-lg font-bold text-indigo-900 border-b pb-2 flex items-center gap-2">
+                            <span>✏️ 填寫小組基本資料</span>
+                            <span class="text-xs font-normal text-slate-400">(輸入後右側會即時生成格式)</span>
+                        </h4>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">小組編號</label>
+                                <select id="form-group" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 font-bold focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                                    <option value="第 1 組">第 1 組</option>
+                                    <option value="第 2 組">第 2 組</option>
+                                    <option value="第 3 組">第 3 組</option>
+                                    <option value="第 4 組">第 4 組</option>
+                                    <option value="第 5 組">第 5 組</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">Canva 海報分享連結</label>
+                                <input type="text" id="form-link" placeholder="請貼上 Canva / 雲端硬碟共享連結" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                            </div>
                         </div>
 
-                        <div class="mt-6 bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                            <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center">⚡ 第四階段：最終衝刺分工 (35分鐘)</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm">
-                                <div class="bg-white p-3 rounded-xl border border-slate-200">
-                                    <b class="text-blue-600 block mb-1">🖼️ A組 (視覺設計)</b>
-                                    海報定稿。確保字體夠大、3米外清晰可見、排版不擁擠。
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-slate-200">
-                                    <b class="text-purple-600 block mb-1">✍️ B組 (內容企劃)</b>
-                                    講稿潤飾。針對預演卡住或超時處刪減贅字，優化內容。
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-slate-200">
-                                    <b class="text-emerald-600 block mb-1">⚙️ C組 (工程/技術)</b>
-                                    輔助工具確認。實測 Prototype 或影音素材，確保成果展不當機。
-                                </div>
-                                <div class="bg-white p-3 rounded-xl border border-slate-200">
-                                    <b class="text-amber-600 block mb-1">⛺ D組 (策展)</b>
-                                    攤位規劃。構思當天展覽現場的攤位佈置與擺設。
-                                </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">專案標題 (發明品或研究題目)</label>
+                            <input type="text" id="form-title" placeholder="例如：智能防跌倒感應器" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 font-semibold focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">指定目標對象</label>
+                                <select id="form-target" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                                    <option value="高中學生">高中學生</option>
+                                    <option value="本校教職員">本校教職員</option>
+                                    <option value="家中長者或照顧者">家中長者或照顧者</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 mb-1">對應主題</label>
+                                <select id="form-theme" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                                    <option value="自主學習">自主學習</option>
+                                    <option value="精神健康">精神健康</option>
+                                    <option value="樂齡安老">樂齡安老</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">已識別的問題/需求 (痛點描述)</label>
+                            <textarea id="form-pain" rows="2" placeholder="例如：長者深夜起床容易在床邊滑倒，且無法第一時間通知家人..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">發明概念 或 研究假設 (科學探究組)</label>
+                            <textarea id="form-concept" rows="2" placeholder="例如：利用重力感應及藍牙警報晶片，設計出一款貼在床邊地墊上的智慧感應器..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">應用科學 / 工程原理 (過程迭代)</label>
+                            <input type="text" id="form-principles" placeholder="例如：重力感應、藍牙訊號傳輸、電路開關控制等" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-rose-500 focus:outline-none" oninput="generateText()">
+                        </div>
+
+                        <!-- 檢核清單 -->
+                        <div class="space-y-2 pt-2">
+                            <label class="block text-xs font-black text-rose-700">視覺與匯報檢核確認 (必勾選)：</label>
+                            <div class="flex items-start gap-2.5">
+                                <input type="checkbox" id="chk-layout" class="mt-1 rounded text-rose-600 focus:ring-rose-500" onchange="generateText()">
+                                <label for="chk-layout" class="text-xs text-slate-600 font-medium">海報尺寸已設定為 <b>A1 Foam board</b>，標題夠大（確保3米外能看見），圖片多於文字，排版舒適。</label>
+                            </div>
+                            <div class="flex items-start gap-2.5">
+                                <input type="checkbox" id="chk-prep" class="mt-1 rounded text-rose-600 focus:ring-rose-500" onchange="generateText()">
+                                <label for="chk-prep" class="text-xs text-slate-600 font-medium">已根據海報設計準備好 <b>2分鐘內</b> 的精準口頭匯報，並進行過模擬演練。</label>
                             </div>
                         </div>
                     </div>
-                    
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
-                            <svg class="w-7 h-7 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            高壓環境角色分配 (PL8 調整版)
-                        </h3>
-                        <div class="space-y-6">
-                            <div class="bg-rose-50 rounded-r-2xl border-l-8 border-rose-500 p-6 lg:p-8 shadow-sm">
-                                <h4 class="text-xl lg:text-2xl font-black text-rose-800 mb-4 tracking-wide">台上：匯報組 (The Pitch Team)</h4>
-                                <ul class="space-y-3 text-base lg:text-lg text-rose-900 font-medium">
-                                    <li class="flex items-start"><span class="mr-3 text-xl">🎤</span> <span class="leading-relaxed"><b class="text-rose-700">主講人 (Pitcher)</b>：挑戰在 120 秒內說清楚「我們做什麼」和「為什麼這很重要」，穩健控制語速。</span></li>
-                                    <li class="flex items-start"><span class="mr-3 text-xl">⚙️</span> <span class="leading-relaxed"><b class="text-rose-700">演示者 (Demo Lead)</b>：配合主講人，在關鍵時刻同步展示模型最亮眼的功能 (Show, don't just tell)。</span></li>
-                                    <li class="flex items-start"><span class="mr-3 text-xl">📝</span> <span class="leading-relaxed"><b class="text-rose-700">記錄員 (Secretary)</b>：<span class="text-rose-600 border-b-2 border-rose-300">下台後最重要！</span>負責彙整導師意見與同學回饋，主持小組內部反思會議。</span></li>
-                                </ul>
+
+                    <!-- 右側：即時生成文字區域 -->
+                    <div class="lg:col-span-5 flex flex-col h-full justify-between bg-slate-900 rounded-2xl p-6 text-indigo-200 border border-slate-800">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                                <span class="text-xs font-black text-emerald-400 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    Padlet 留言預覽
+                                </span>
+                                <span class="text-[10px] text-slate-500">FORMATTED FOR PADLET</span>
                             </div>
                             
-                            <div class="bg-amber-50 rounded-r-2xl border-l-8 border-amber-500 p-6 lg:p-8 shadow-sm">
-                                <h4 class="text-xl lg:text-2xl font-black text-amber-800 mb-4 tracking-wide">台下：互評組 (The Investors)</h4>
-                                <ul class="space-y-3 text-base lg:text-lg text-amber-900 font-medium">
-                                    <li class="flex items-start"><span class="mr-3 text-xl">📊</span> <span class="leading-relaxed"><b class="text-amber-700">評分員 (Scorer)</b>：重點評估「吸引力」——這2分鐘演講有讓你想要去他們的攤位看更多嗎？</span></li>
-                                    <li class="flex items-start"><span class="mr-3 text-xl">🕵️</span> <span class="leading-relaxed"><b class="text-amber-700">邏輯檢察員 (Logic Checker)</b>：專聽「因果關係」與「證據」，檢查解決方案是否真的能解決痛點。</span></li>
-                                </ul>
-                            </div>
+                            <!-- 預覽輸出 -->
+                            <pre id="padlet-output" class="text-xs font-mono whitespace-pre-wrap leading-relaxed text-slate-300 overflow-y-auto max-h-[350px]">請在左側填寫專案資訊，系統將會為您在這裡即時排版。</pre>
+                        </div>
+
+                        <div class="pt-6">
+                            <button onclick="copyToClipboard()" class="btn-press w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                                <span>一鍵複製格式，前往 Padlet 貼上</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- TAB 2: 極速簡報計時台 -->
         <section id="tab-dashboard" class="tab-content space-y-6">
-            
-            <div class="bg-white rounded-xl shadow-sm p-4 border border-slate-200">
-                <h3 class="text-sm font-bold text-slate-500 mb-2 flex items-center">
-                    🗓️ PL8 簡報快速輪替順序表 (前20分鐘專用)
-                </h3>
-                <div class="grid grid-cols-5 gap-2 text-center text-xs font-bold">
-                    <div class="bg-rose-50 border border-rose-200 rounded p-2 text-rose-700">第一輪：第一組</div>
-                    <div class="bg-orange-50 border border-orange-200 rounded p-2 text-orange-700">第二輪：第二組</div>
-                    <div class="bg-amber-50 border border-amber-200 rounded p-2 text-amber-700">第三輪：第三組</div>
-                    <div class="bg-yellow-50 border border-yellow-200 rounded p-2 text-yellow-700">第四輪：第四組</div>
-                    <div class="bg-emerald-50 border border-emerald-200 rounded p-2 text-emerald-700">第五輪：第五組</div>
+            <!-- 輪替順序快速索引 -->
+            <div class="bg-white rounded-2xl shadow-sm p-4 border border-slate-200">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+                    <h3 class="text-sm font-bold text-slate-500 flex items-center gap-1">
+                        <span>🗓️ PL8 成果展預演快速輪替順序表：</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-1.5 justify-center">
+                        <span class="bg-rose-50 border border-rose-200 text-rose-700 text-[11px] font-black px-2 py-1 rounded">第一輪：第1組</span>
+                        <span class="bg-orange-50 border border-orange-200 text-orange-700 text-[11px] font-black px-2 py-1 rounded">第二輪：第2組</span>
+                        <span class="bg-amber-50 border border-amber-200 text-amber-700 text-[11px] font-black px-2 py-1 rounded">第三輪：第3組</span>
+                        <span class="bg-yellow-50 border border-yellow-200 text-yellow-700 text-[11px] font-black px-2 py-1 rounded">第四輪：第4組</span>
+                        <span class="bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-black px-2 py-1 rounded">第五輪：第5組</span>
+                    </div>
                 </div>
             </div>
 
+            <!-- Randomizers -->
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-rose-500"></div>
+                <!-- Presenter Draw -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-rose-500"></div>
                     <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-lg font-bold text-slate-700">上台 Pitch 組別 (手動抽籤備用)</h3>
-                        <button onclick="resetPool('presenter')" class="text-xs text-slate-400 hover:text-rose-600 transition-colors font-medium flex items-center" title="重新放入所有組別">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
+                        <h3 class="text-sm font-bold text-slate-500">當前上台 Pitch 組別</h3>
+                        <button onclick="resetPool('presenter')" class="text-xs text-slate-400 hover:text-rose-600 transition-colors font-medium flex items-center gap-1" title="重新放入所有組別">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
                         </button>
                     </div>
                     <div class="text-5xl font-black text-rose-600 my-4 h-16 flex items-center justify-center" id="presenter-result">?</div>
-                    <div class="text-sm font-medium text-slate-400 mb-4 h-5" id="presenter-remaining">剩餘: 1, 2, 3, 4, 5</div>
-                    <button onclick="drawGroup('presenter')" id="presenter-btn" class="btn-press bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold py-3 px-6 rounded-lg w-full transition-colors flex justify-center items-center">
-                        抽取匯報組 (手動)
+                    <div class="text-xs font-bold text-slate-400 mb-4 h-5" id="presenter-remaining">剩餘組別: 1, 2, 3, 4, 5</div>
+                    <button onclick="drawGroup('presenter')" id="presenter-btn" class="btn-press bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold py-3.5 px-6 rounded-xl w-full transition-colors flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        抽取簡報小組
                     </button>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
+                <!-- Reviewer Draw -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200 text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-amber-500"></div>
                     <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-lg font-bold text-slate-700">指定突擊反饋組 (備用)</h3>
-                        <button onclick="resetPool('reviewer')" class="text-xs text-slate-400 hover:text-amber-600 transition-colors font-medium flex items-center" title="重新放入所有組別">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
+                        <h3 class="text-sm font-bold text-slate-500">指定焦點回饋組別 (備用)</h3>
+                        <button onclick="resetPool('reviewer')" class="text-xs text-slate-400 hover:text-amber-600 transition-colors font-medium flex items-center gap-1" title="重新放入所有組別">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg> 重設
                         </button>
                     </div>
                     <div class="text-5xl font-black text-amber-600 my-4 h-16 flex items-center justify-center" id="reviewer-result">?</div>
-                    <div class="text-sm font-medium text-slate-400 mb-4 h-5" id="reviewer-remaining">剩餘: 1, 2, 3, 4, 5</div>
-                    <button onclick="drawGroup('reviewer')" id="reviewer-btn" class="btn-press bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold py-3 px-6 rounded-lg w-full transition-colors flex justify-center items-center">
-                        抽取回饋組 (手動)
+                    <div class="text-xs font-bold text-slate-400 mb-4 h-5" id="reviewer-remaining">剩餘組別: 1, 2, 3, 4, 5</div>
+                    <button onclick="drawGroup('reviewer')" id="reviewer-btn" class="btn-press bg-amber-100 hover:bg-amber-200 text-amber-700 font-bold py-3.5 px-6 rounded-xl w-full transition-colors flex justify-center items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        抽取回饋組別
                     </button>
                 </div>
             </div>
 
+            <!-- Timers -->
             <div class="grid lg:grid-cols-2 gap-6">
-                
-                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-rose-100 flex flex-col h-full">
+                <!-- Presentation Timer -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border-2 border-rose-100 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-rose-700">極速 Pitch 簡報器 (2分鐘)</h3>
+                        <h3 class="text-xl font-bold text-rose-700">極速簡報計時器 (2分鐘)</h3>
                         <span class="px-3 py-1 bg-rose-100 text-rose-800 rounded-full text-xs font-bold">Step 1</span>
                     </div>
                     
                     <div class="flex-grow flex flex-col justify-center items-center py-6">
                         <div id="pres-time-display" class="text-7xl font-mono font-black text-slate-800 tracking-tighter tabular-nums mb-4">02:00</div>
                         
+                        <!-- Progress & Phase -->
                         <div class="w-full max-w-sm space-y-2">
                             <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                                 <div id="pres-progress" class="h-full bg-rose-500 progress-bar" style="width: 100%;"></div>
@@ -188,10 +307,10 @@
                         </div>
                     </div>
                     <div class="flex space-x-3 mt-4">
-                        <button onclick="toggleTimer('pres')" id="pres-toggle-btn" class="flex-1 btn-press bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg transition-colors">
+                        <button onclick="toggleTimer('pres')" id="pres-toggle-btn" class="flex-1 btn-press bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 rounded-xl transition-colors">
                             開始
                         </button>
-                        <button onclick="resetTimer('pres')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors">
+                        <button onclick="resetTimer('pres')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3.5 px-6 rounded-xl transition-colors">
                             重設
                         </button>
                     </div>
@@ -202,9 +321,10 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md p-6 border-2 border-amber-100 flex flex-col h-full">
+                <!-- Feedback & Transition Timer -->
+                <div class="bg-white rounded-2xl shadow-md p-6 border-2 border-amber-100 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-amber-700">快閃回饋與轉場器 (2分鐘)</h3>
+                        <h3 class="text-xl font-bold text-amber-700">快閃回饋與轉場計時器 (2分鐘)</h3>
                         <div class="flex space-x-2">
                             <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">Step 2 & 3</span>
                         </div>
@@ -213,6 +333,7 @@
                     <div class="flex-grow flex flex-col justify-center items-center py-6">
                         <div id="feed-time-display" class="text-7xl font-mono font-black text-slate-800 tracking-tighter tabular-nums mb-4">02:00</div>
                         
+                        <!-- Progress & Phase -->
                         <div class="w-full max-w-sm space-y-2">
                             <div class="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                                 <div id="feed-progress" class="h-full bg-amber-500 progress-bar" style="width: 100%;"></div>
@@ -223,10 +344,10 @@
                         </div>
                     </div>
                     <div class="flex space-x-3 mt-4">
-                        <button onclick="toggleTimer('feed')" id="feed-toggle-btn" class="flex-1 btn-press bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-lg transition-colors">
+                        <button onclick="toggleTimer('feed')" id="feed-toggle-btn" class="flex-1 btn-press bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl transition-colors">
                             開始
                         </button>
-                        <button onclick="resetTimer('feed')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-6 rounded-lg transition-colors">
+                        <button onclick="resetTimer('feed')" class="btn-press bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3.5 px-6 rounded-xl transition-colors">
                             重設
                         </button>
                     </div>
@@ -239,49 +360,68 @@
             </div>
         </section>
 
+        <!-- TAB 3: 模擬評審與觀眾視角 -->
         <section id="tab-rubric" class="tab-content space-y-8">
             <div class="bg-white rounded-2xl shadow-md p-8 lg:p-10 border border-slate-200">
-                <h2 class="text-3xl font-extrabold text-rose-800 mb-8 flex items-center pb-4 border-b-2 border-rose-100">
-                    <svg class="w-10 h-10 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    第一部分：模擬評審指標 (1-5分)
-                </h2>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b-2 border-slate-100 pb-4">
+                    <h2 class="text-3xl font-extrabold text-slate-800 flex items-center">
+                        <svg class="w-10 h-10 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        第一部分：同儕模擬評審指標 (學生版)
+                    </h2>
+                    <span class="bg-rose-100 border border-rose-200 text-rose-800 text-xs font-black px-3.5 py-1.5 rounded-full flex items-center gap-1">
+                        🌟 佔最終成果展總成績之重要預演！
+                    </span>
+                </div>
+                
                 <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
-                    <table class="min-w-full divide-y divide-slate-200 text-base lg:text-xl">
+                    <table class="min-w-full divide-y divide-slate-200 text-base lg:text-lg">
                         <thead class="bg-rose-50">
                             <tr>
-                                <th scope="col" class="px-6 py-5 text-left font-black text-rose-900 uppercase tracking-wider w-1/4 lg:w-1/3">四大核心指標</th>
+                                <th scope="col" class="px-6 py-5 text-left font-black text-rose-900 uppercase tracking-wider w-1/3">評分項目</th>
                                 <th scope="col" class="px-6 py-5 text-left font-black text-rose-900 uppercase tracking-wider">重點檢核清單 (Checklist)</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-slate-200">
                             <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-6 py-5 font-bold text-slate-900 flex items-center"><span class="bg-rose-100 text-rose-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">1</span>表達與設計</td>
+                                <td class="px-6 py-5 font-bold text-slate-900">
+                                    1. 表達與設計<br>
+                                    <span class="text-sm font-normal text-slate-400 block mt-1">(海報 ✕ 2分鐘口頭)</span>
+                                </td>
                                 <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
-                                    🖼️ 海報標題夠大，<b>3米外能看見嗎？</b><br>
-                                    📊 圖片多於文字，排版不擁擠 (A1 Foam board)。<br>
-                                    🎤 匯報聲音響亮，<b>能在 2 分鐘內講完重點？</b>
+                                    • 海報標題足夠醒目嗎？<b>3米外能看見嗎？</b><br>
+                                    • 海報排版是否<b>圖片多於文字</b>，不會擠滿密密麻麻的文字 (A1 Foam board)？<br>
+                                    • 口頭匯報聲音響亮、精準且能在 <b>2分鐘內</b> 順暢講完重點？
                                 </td>
                             </tr>
-                            <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
-                                <td class="px-6 py-5 font-bold text-slate-900 flex items-center"><span class="bg-rose-100 text-rose-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">2</span>邏輯與證據<br><span class="text-xs text-rose-600 font-black block mt-1">(最重要! 40%)</span></td>
+                            <tr class="bg-rose-50/10 hover:bg-rose-50/20 transition-colors">
+                                <td class="px-6 py-5 font-bold text-slate-900">
+                                    2. 邏輯與證據<br>
+                                    <span class="text-sm font-black text-rose-600 block mt-1">(最重要！佔比高達 40%)</span>
+                                </td>
                                 <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
-                                    🛠️ <b>發明品組：</b>有展示原型 (Prototype) 運作嗎？<br>
-                                    🔬 <b>科學探究組：</b>實驗數據是否可信？有圖表支持嗎？<br>
-                                    🤖 是否有運用 <b>AI 或 ICT 工具</b> 進行資料收集或分析？
+                                    • <b>發明品組</b>：有現場實際展示 <b>實物原型 (Prototype)</b> 運作嗎？<br>
+                                    • <b>科學探究組</b>：實驗數據是否可信、嚴謹？有運用<b>清晰的圖表</b>支持結論嗎？<br>
+                                    • 團隊是否能清楚說明如何運用 <b>AI 或 ICT 工具</b> 進行數據收集或資料分析？
                                 </td>
                             </tr>
                             <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-6 py-5 font-bold text-slate-900 flex items-center"><span class="bg-rose-100 text-rose-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">3</span>同理心<br><span class="text-xs text-slate-500 font-normal block">(解決痛點)</span></td>
+                                <td class="px-6 py-5 font-bold text-slate-900">
+                                    3. 同理心<br>
+                                    <span class="text-sm font-normal text-slate-400 block mt-1">(真實生活痛點)</span>
+                                </td>
                                 <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
-                                    👥 是否清楚說明探究對象 (學生/教職員/長者) 的真實困難？<br>
-                                    💡 提出的解決方案<b>真的能幫到他們嗎？</b>還是流於空想？
+                                    • 團隊是否能深刻並具體說明探究對象 (高中生/教職員/長者) 面臨的<b>真實生活困難</b>？<br>
+                                    • 他們提出的解決方案<b>真的能有效幫助到目標對象嗎？</b>還是不切實際的空想？
                                 </td>
                             </tr>
                             <tr class="bg-slate-50 hover:bg-slate-100 transition-colors">
-                                <td class="px-6 py-5 font-bold text-slate-900 flex items-center"><span class="bg-rose-100 text-rose-700 w-8 h-8 rounded-full flex items-center justify-center mr-3 text-lg shrink-0">4</span>創意<br><span class="text-xs text-slate-500 font-normal block">(吸睛度)</span></td>
+                                <td class="px-6 py-5 font-bold text-slate-900">
+                                    4. 創意<br>
+                                    <span class="text-sm font-normal text-slate-400 block mt-1">(吸睛度 ✕ 原創性)</span>
+                                </td>
                                 <td class="px-6 py-5 text-slate-700 font-medium leading-relaxed">
-                                    ✨ 這個專題點子是否有新意？(絕對不是網上隨便抄來的)。<br>
-                                    🎨 整個海報與展位視覺設計是否足夠吸引人？
+                                    • 這個點子是否有獨特、亮眼的原創性？(絕對不是網絡上隨意複製抄襲的點子)<br>
+                                    • 整個專案設計是否非常具有<b>吸睛度 (Wow factor)</b>？
                                 </td>
                             </tr>
                         </tbody>
@@ -289,55 +429,104 @@
                 </div>
             </div>
 
-            <div class="bg-rose-50 rounded-2xl shadow-md p-8 lg:p-10 border border-rose-200">
-                <h2 class="text-3xl font-extrabold text-rose-900 mb-8 flex items-center">
-                    <svg class="w-10 h-10 mr-3 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                    第二部分：模擬中一觀眾視角 & 終極修訂建議
-                </h2>
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border-t-8 border-blue-500 shadow-sm flex flex-col">
-                        <h3 class="font-black text-xl mb-4 text-slate-800">👀 Q1. 會停下來看嗎？</h3>
-                        <div class="space-y-2 text-base text-slate-700 font-medium bg-blue-50 p-4 rounded-xl border border-blue-100 flex-grow">
-                            <p>🟩 <b>一定會：</b>標題/模型極度吸引</p>
-                            <p>🟨 <b>可能會：</b>如果剛好沒人排隊</p>
-                            <p>🟥 <b>不會：</b>看起來字太多、太悶</p>
+            <!-- 第二部分：中一觀眾視角與終極建議 -->
+            <div class="bg-slate-900 rounded-3xl shadow-lg p-8 lg:p-10 text-white border border-slate-800">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8 border-b border-slate-800 pb-5">
+                    <div>
+                        <span class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/30">全新模擬情境</span>
+                        <h2 class="text-3xl font-black mt-2">第二部分：模擬中一級觀眾視角 (模擬7月8日展覽日)</h2>
+                    </div>
+                    <span class="text-slate-400 text-sm">設身處地思考中一同學的感受</span>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Q1 -->
+                    <div class="bg-white/5 rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">1</span>
+                                <h3 class="text-xl font-bold text-yellow-400">如果你是路過的中一同學，你會停下來看這組展位嗎？</h3>
+                            </div>
+                            <div class="space-y-3 pl-9">
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q1-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>🟩 <b>一定會</b> (標題很奪目、展位上的模型實物極度吸睛)</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q1-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>🟨 <b>可能會</b> (如果剛好有朋友在看，或者沒人排隊)</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q1-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>🟥 <b>不會</b> (看起來字太多了，感覺跟教科書一樣悶)</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="bg-white p-6 rounded-2xl border-t-8 border-purple-500 shadow-sm flex flex-col">
-                        <h3 class="font-black text-xl mb-4 text-slate-800">🎮 Q2. 有用或好玩嗎？</h3>
-                        <div class="space-y-2 text-base text-slate-700 font-medium bg-purple-50 p-4 rounded-xl border border-purple-100 flex-grow">
-                            <p>🔥 <b>非常有價值：</b>既有用又好玩！</p>
-                            <p>😐 <b>感覺普通：</b>缺乏驚喜點</p>
-                            <p>❓ <b>不太理解：</b>看不出具體用處</p>
+                    <!-- Q2 -->
+                    <div class="bg-white/5 rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-rose-500 text-white w-7 h-7 rounded-full flex items-center justify-center font-bold">2</span>
+                                <h3 class="text-xl font-bold text-yellow-400">聽完他們的解說後，你覺得這個專案「有用」或「好玩」嗎？</h3>
+                            </div>
+                            <div class="space-y-3 pl-9">
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q2-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>🔥 <b>非常有價值 / 好玩！</b>聽完直接想幫忙轉發投票！</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q2-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>😐 <b>普通、還好：</b>概念一般，解決方法聽上去沒特別震撼</span>
+                                </label>
+                                <label class="flex items-center gap-3 bg-white/5 hover:bg-white/10 p-3 rounded-xl border border-white/5 transition-all cursor-pointer">
+                                    <input type="radio" name="q2-radio" class="text-rose-500 focus:ring-rose-500 bg-transparent border-white/20">
+                                    <span>❓ <b>不太理解用處：</b>不知道這個發明品能幹嘛，聽完一頭霧水</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="bg-white p-6 rounded-2xl border-t-8 border-emerald-500 shadow-sm flex flex-col">
-                        <h3 class="font-black text-xl mb-4 text-slate-800">🚀 終極修訂建議提示</h3>
-                        <div class="text-sm text-slate-700 leading-relaxed font-medium bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex-grow space-y-2">
-                            <p><b>🖼️ 針對海報/視覺：</b>注意字體是否太小、圖表是否雜亂或缺乏重點。</p>
-                            <p><b>🎤 針對口頭匯報：</b>注意語速是否過快、有無演示模型、眼神是否能與觀眾接觸。</p>
+                <!-- Star & Wish 互評黃金準則 -->
+                <div class="mt-8 border-t border-white/10 pt-8 space-y-4">
+                    <h3 class="text-2xl font-bold text-slate-100">第三部分：終極修訂建議 (Star & Wish)</h3>
+                    <p class="text-slate-400 text-sm">請寫出最坦白也最具建設性的點評，協助對方「完美避坑」、爭奪成果展大獎：</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-5">
+                            <span class="text-amber-400 font-bold block mb-2">⭐ 讚賞 (Star)</span>
+                            <span class="text-slate-300 text-sm leading-relaxed">指出對方簡報或海報中做得最好的亮點。例如：「海報色彩搭配非常吸睛，2分鐘解說很有節奏、完全沒有卡頓！」</span>
+                        </div>
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5">
+                            <span class="text-blue-400 font-bold block mb-2">🎯 建議 (Wish)</span>
+                            <span class="text-slate-300 text-sm leading-relaxed">給予最具體的改正意見。例如：「字體有些太小了，站在一米半外就看不清海報內容。建議刪除副標題，放大圖片！」</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     </main>
 
+    <!-- Floating Custom Toast Notification (取代 Browser Alert) -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 border border-slate-800 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
+        <span class="bg-emerald-500 text-slate-900 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">✓</span>
+        <span id="toast-message" class="text-sm font-semibold">資料複製成功！</span>
+    </div>
+
+    <!-- Scripts for Logic -->
     <script>
         // --- Tab Switching Logic ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-rose-700', 'shadow');
-                btn.classList.add('text-rose-100');
+                btn.classList.remove('bg-white', 'text-rose-700', 'shadow-md');
+                btn.classList.add('text-rose-100', 'hover:bg-white/10');
             });
             document.getElementById(tabId).classList.add('active');
             const activeBtn = document.getElementById(`btn-${tabId}`);
-            activeBtn.classList.remove('text-rose-100');
-            activeBtn.classList.add('bg-white', 'text-rose-700', 'shadow');
+            activeBtn.classList.remove('text-rose-100', 'hover:bg-white/10');
+            activeBtn.classList.add('bg-white', 'text-rose-700', 'shadow-md');
         }
 
         // --- Audio Context for Beeps ---
@@ -392,11 +581,11 @@
         function updateRemainingUI(type) {
             const remainingDiv = document.getElementById(`${type}-remaining`);
             if (pools[type].length === 0) {
-                remainingDiv.innerText = "已全數抽出";
+                remainingDiv.innerText = "所有小組已完成預演！";
                 remainingDiv.classList.add("text-rose-500");
                 remainingDiv.classList.remove("text-slate-400");
             } else {
-                remainingDiv.innerText = `剩餘: ${pools[type].join(', ')}`;
+                remainingDiv.innerText = `剩餘組別: ${pools[type].join(', ')}`;
                 remainingDiv.classList.remove("text-rose-500");
                 remainingDiv.classList.add("text-slate-400");
             }
@@ -416,13 +605,16 @@
             const resultDiv = document.getElementById(`${type}-result`);
             const btn = document.getElementById(`${type}-btn`);
             let candidates = [...pools[type]];
+            
+            // 避免自評 (簡報組與回饋組為同一個)
             if (type === 'reviewer' && currentPresenter !== null) {
                 candidates = candidates.filter(g => g !== currentPresenter);
             }
             if (candidates.length === 0) {
-                resultDiv.innerHTML = `<span class="text-3xl text-slate-400">無可用組別</span>`;
+                resultDiv.innerHTML = `<span class="text-xl text-slate-400">已無合適組別</span>`;
                 return;
             }
+            
             const winnerIndex = Math.floor(Math.random() * candidates.length);
             const winner = candidates[winnerIndex];
             let counter = 0;
@@ -449,21 +641,21 @@
             }, 50);
         }
 
-        // --- Timers Logic ---
-        // PL8 更新：匯報改為120秒；回饋與轉場拆分為 快閃回饋(60秒) 與 轉場就位(60秒)
+        // --- Timers Logic (PL8 2+1 互動模式) ---
+        // 2分鐘簡報 (120s) | 2分鐘回饋與轉場 (120s)
         const timers = {
             pres: { 
                 timeTotal: 120, timeRemaining: 120, interval: null, isRunning: false, 
                 phases: [
-                    { start: 120, end: 60, text: "📢 電梯簡報前半：點出痛點與 V2 核心方案！", color: "bg-rose-400" },
-                    { start: 60, end: 0, text: "🔥 後半衝刺：展示 Prototype V2 亮點或關鍵圖表！", color: "bg-rose-600" }
+                    { start: 120, end: 60, text: "📢 電梯簡報前半：明確點出對象、生活痛點與 V2 核心方案！", color: "bg-rose-500" },
+                    { start: 60, end: 0, text: "🔥 後半衝刺：快展示 Prototype V2 實物功能或最驚艷的圖表！", color: "bg-rose-700" }
                 ]
             },
             feed: { 
                 timeTotal: 120, timeRemaining: 120, interval: null, isRunning: false, 
                 phases: [
-                    { start: 120, end: 60, text: "📝 快閃回饋 (60秒)：台下記錄盲點、導師一句話點評", color: "bg-amber-400" },
-                    { start: 60, end: 0, text: "⏳ 轉場時間 (60秒)：請下一組同學迅速上台就位", color: "bg-slate-500" }
+                    { start: 120, end: 60, text: "📝 快閃回饋 (60秒)：台下專注記下聽不懂/盲點，導師一句話點評！", color: "bg-amber-400" },
+                    { start: 60, end: 0, text: "⏳ 轉場時間 (60秒)：請下一組同學迅速攜帶海報與原型上台就位！", color: "bg-slate-500" }
                 ]
             }
         };
@@ -518,15 +710,15 @@
                 t.interval = setInterval(() => {
                     t.timeRemaining--;
                     updateUI(type);
-                    if (t.timeRemaining === 10) playBeep('warning'); // 倒數10秒發出微弱警告音
+                    if (t.timeRemaining === 10) playBeep('warning'); 
                     if (t.timeRemaining <= 0) {
                         clearInterval(t.interval);
                         t.isRunning = false;
-                        btn.innerText = "強制停止";
+                        btn.innerText = "完成";
                         btn.disabled = true;
                         btn.classList.add('opacity-50', 'cursor-not-allowed');
                         document.getElementById(`${type}-time-display`).classList.replace('text-red-500', 'text-slate-800');
-                        playBeep('warning'); // 時間到強制響鈴
+                        playBeep('warning'); 
                     }
                 }, 1000);
             }
@@ -562,14 +754,81 @@
                 btn.disabled = false;
                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 document.getElementById(`${type}-time-display`).classList.remove('text-red-500');
-                if (btn.innerText === "強制停止" || btn.innerText === "完成") btn.innerText = "開始";
+                if (btn.innerText === "完成") btn.innerText = "開始";
             }
             updateUI(type);
+        }
+
+        // --- Padlet Template Generation Logic ---
+        function generateText() {
+            const group = document.getElementById('form-group').value;
+            const link = document.getElementById('form-link').value || '[請貼上 Canva / 雲端硬碟共享連結]';
+            const title = document.getElementById('form-title').value || '[請輸入專案標題]';
+            const target = document.getElementById('form-target').value;
+            const theme = document.getElementById('form-theme').value;
+            const pain = document.getElementById('form-pain').value || '[請說明目標對象面臨的核心痛點與困難]';
+            const concept = document.getElementById('form-concept').value || '[發明品組：寫出嶄新原創構思；科學組：寫出科學探究假設]';
+            const principles = document.getElementById('form-principles').value || '[請說明應用的學科、科學或工程原理]';
+            
+            const chkLayout = document.getElementById('chk-layout').checked ? "✔️ 已確認" : "❌ 未確認";
+            const chkPrep = document.getElementById('chk-prep').checked ? "✔️ 已確認" : "❌ 未確認";
+
+            const formattedText = `📢 【專題研習成果展預演與備展資料提交】
+
+📌 小組組別：${group}
+
+1️⃣ 成果展海報設計初稿
+• Canva/雲端共享連結：${link}
+• A1 Foam board 視覺海報排版檢核：${chkLayout}
+• 2分鐘精準簡報與成果展演練：${chkPrep}
+
+2️⃣ 探究成果基本資訊
+• 專案標題：${title}
+• 指定目標對象：${target}
+• 對應核心主題：${theme}
+• 識別痛點與需求：${pain}
+• 發明概念/研究假設：${concept}
+• 應用科學/工程原理：${principles}`;
+
+            document.getElementById('padlet-output').innerText = formattedText;
+        }
+
+        // --- Clipboard Fallback Strategy (No alert inside iframe) ---
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('padlet-output').innerText;
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast("📋 格式已成功複製！請直接前往 Padlet 留言貼上。");
+                    playBeep('reveal');
+                } else {
+                    showToast("❌ 複製失敗，請手動複製右側預覽框。");
+                }
+            } catch (err) {
+                showToast("❌ 瀏覽器不支援一鍵複製，請手動複製右側文字。");
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('toast-active');
+            setTimeout(() => {
+                toast.classList.remove('toast-active');
+            }, 3000);
         }
 
         // Initialize UI
         updateUI('pres');
         updateUI('feed');
+        generateText(); // Generate initial template
     </script>
 </body>
 </html>
